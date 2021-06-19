@@ -1,9 +1,6 @@
 {
-<<<<<<< HEAD
   "homepage": "https://tjonjumy.github.io/TasksManager/",
-=======
   "homepage": "http://tjonjumy.github.io/TasksManager/",
->>>>>>> d859c20 (change homepage link)
   "name": "task-manager-app",
   "version": "0.1.0",
   "private": true,
