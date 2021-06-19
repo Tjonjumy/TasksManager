@@ -38,8 +38,11 @@ class TaskManager extends React.Component {
 
     onSubmitHandle(data) {
         const task = Object.assign({}, data);
-        const {id} = task;
+        const {id, trash} = task;
         const {tasks} = this.state;
+        if (trash) {
+            task.trash = false;
+        }
         if (id) {
             const index = findIndex(tasks, {id: id});
             tasks.splice(index, 1, task);
@@ -153,7 +156,7 @@ class TaskManager extends React.Component {
                                 <Modal 
                                     onRemove={this.deleteAllTasks} 
                                     type={'Remove All'}
-                                    message={'All tasks will be erased permenantly'}
+                                    message={'All tasks will be erased permenantly.'}
                                 />
                                 <div className="bar-menu-container d-inline float-right">
                                     <i className="fa fa-bars"></i>
