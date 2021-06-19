@@ -1,12 +1,12 @@
 function Modal(props) {
     const {type, message} = props;
-    const removeAllBtn = (<span 
-                            type="button" 
-                            data-toggle="modal" data-target="#myModal"
-                            // className="btn btn-danger float-right"
-                        >
-                            Remove all taks
-                        </span>);
+    // const removeAllBtn = (<span 
+    //                         type="button" 
+    //                         data-toggle="modal" data-target="#myModal"
+    //                         // className="btn btn-danger float-right"
+    //                     >
+    //                         Remove all taks
+    //                     </span>);
     const removeBtn = (<button 
                             type="button" 
                             data-toggle="modal" data-target="#myModal"

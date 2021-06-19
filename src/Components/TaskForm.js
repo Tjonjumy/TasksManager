@@ -112,10 +112,10 @@ class TaskForm extends React.Component {
                       </div>
                       <div className="row">
                         <div className="col-6 col-md-6 col-lg-6">
-                            <button type="submit" className="btn btn-primary mr-4">{id ? 'Save' : 'Add'}</button>
+                            {btnElement}
                         </div>
                         <div className="col-6 col-md-6 col-lg-6">
-                            {btnElement}
+                            <button type="submit" className="btn btn-primary mr-4">{id ? 'Save' : 'Add'}</button>
                         </div>
                       </div>
                   </form>

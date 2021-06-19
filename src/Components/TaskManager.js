@@ -44,6 +44,9 @@ class TaskManager extends React.Component {
             task.trash = false;
         }
         if (id) {
+            if (task.status === 'removed') {
+                task.status = 'todo';
+            }
             const index = findIndex(tasks, {id: id});
             tasks.splice(index, 1, task);
         } else {
