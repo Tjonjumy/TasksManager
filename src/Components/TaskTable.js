@@ -1,13 +1,26 @@
 import TaskRow from "./TaskRow";
 import sortHandle from "./sortHandle";
+import FilterItem from "./FilterItem";
 
 function TaskTable(props) {
-
-    const {tasks, searchText, order} = props;
+    const {tasks, searchText, order, filterText} = props;
+    const filterList = [
+                            {title:'All', value: 'all'},
+                            {title:'To do', value: 'todo'},
+                            {title:'Inprogress', value: 'inprogress'},
+                            {title:'Completed', value: 'completed'},
+                            {title:'Removed', value: 'removed'},
+                        ];
+    const filterMenuElements = filterList.map(item => {
+        return <FilterItem key={item.value} itemTitle={item.title} onClick={() => props.filterHandle(item.value)}/>
+    });
     let Rows = <TaskRow task={''} message={'No tasks available'}/>;
     if (tasks.length > 0) {
         let processedTasks = tasks.map((task) => {
-            if (task.trash) {
+            if (task.trash && filterText !== 'removed' && searchText === '') {
+                return -1;
+            }
+            if (filterText !== 'all' && task.status !== filterText && searchText === '') {
                 return -1;
             }
             if (task.name.toLowerCase().indexOf(searchText) === -1) {
@@ -19,11 +32,11 @@ function TaskTable(props) {
         processedTasks = sortHandle(processedTasks, order);
         
         Rows = processedTasks.map((task, idx) => {
-            return <TaskRow 
-                key={task.id} 
-                task={task} no={idx} 
-                editTask={(id) => props.editTask(id)}                   
-                />
+            return (<TaskRow 
+                        key={task.id} 
+                        task={task} no={idx} 
+                        editTask={(id) => props.editTask(id)}                   
+                    />);
         });
         if (Rows.length === 0) {
             Rows = <TaskRow task={''} message={'No results found'}/>;
@@ -31,7 +44,7 @@ function TaskTable(props) {
     }
     return (
         <table className="table table-bordered table-hover task-table">
-            <thead style={{background: "#75e7ad"}}>
+            <thead style={{background: "#75e7ad"}} className="text-center">
                 <tr>
                     <th>No</th>
                     <th>
@@ -55,11 +68,7 @@ function TaskTable(props) {
                         <div className="dropdown d-inline float-right">
                             <span className="dropdown-toggle" id="dLabel2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
                             <div className="dropdown-menu" aria-labelledby="dLabel2">
-                                <span className="dropdown-item" type="span">All</span>
-                                <span className="dropdown-item" type="span">To do</span>
-                                <span className="dropdown-item" type="span">Inprogress</span>
-                                <span className="dropdown-item" type="span">Completed</span>
-                                <span className="dropdown-item" type="span">Removed</span>
+                                {filterMenuElements}
                             </div>
                         </div>
                     </th>

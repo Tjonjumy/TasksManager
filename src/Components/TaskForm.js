@@ -34,7 +34,6 @@ class TaskForm extends React.Component {
 
     onSubmitHandle(event) {
         const {task} = this.state;
-        console.log(task)
         event.preventDefault();
         this.handelValidation();
         if (task.name.trim()) {
@@ -47,8 +46,8 @@ class TaskForm extends React.Component {
         }
     }
 
-    onRemoveHandle() {
-
+    removeTaskHandle = () => {
+        this.props.onRemoveTask(this.state.task)
     }
 
     handelValidation() {
@@ -62,12 +61,25 @@ class TaskForm extends React.Component {
 
     render() {
         const {task, isValid} = this.state;
-        const {name, status} = task;
+        const {name, status, id} = task;
+        const removeBtn = <Modal 
+                            type={'Remove'} 
+                            message={'Are you sure you want to remove this task?'} 
+                            onRemove={this.removeTaskHandle}                               
+                          />;
+        const discardBtn = <button 
+                                type="submit" 
+                                className="btn btn-default float-right" 
+                                onClick={this.props.onCloseTaskForm}>
+                                Discard
+                            </button>;
+        const btnElement = id ? removeBtn : discardBtn;
+
         return (
           <div className="card card-primary">
               <div className="card-header">
                   <i className="fa fa-times" aria-hidden="true" onClick={this.props.onCloseTaskForm}></i>
-                  <h3 className="card-title">Add Task</h3>
+                  <h3 className="card-title">{id ? 'Edit Task' : 'Add New Task'}</h3>
               </div>
               <div className="card-body">
                   <form onSubmit={this.onSubmitHandle}>
@@ -92,26 +104,20 @@ class TaskForm extends React.Component {
                             onChange={this.handleChange}
                             value={status}
                           >
-                            <option value="todo">Todo</option>
+                            <option value="todo">To do</option>
                             <option value="inprogress">Inprogress</option>
                             <option value="completed">Completed</option>
-                            <option value="removed">Removed</option>
+                            {/* <option value="removed">Removed</option> */}
                           </select>
                       </div>
                       <div className="row">
-                        <div className="col-md-6 col-lg-6">
-                            <button type="submit" className="btn btn-primary mr-4">Save</button>
-
+                        <div className="col-6 col-md-6 col-lg-6">
+                            <button type="submit" className="btn btn-primary mr-4">{id ? 'Save' : 'Add'}</button>
                         </div>
-                        <div className="col-md-6 col-lg-6">
-                            <Modal 
-                                onRemove={this.deleteAllTasks} 
-                                type={'Remove'}
-                                message={'Are you sure you want to remove this task?'}
-                            />
+                        <div className="col-6 col-md-6 col-lg-6">
+                            {btnElement}
                         </div>
                       </div>
-                      {/* <button type="button" className="btn btn-default" onClick={this.onRemoveHandle}>Remove</button> */}
                   </form>
               </div>
           </div>

@@ -1,7 +1,8 @@
 
 function TaskRow(props) {
     const {task} = props;
-    if (!task || task.trash) {
+    // if (!task || task.trash)
+    if (!task) {
         return (
             <tr>
                 <td colSpan="4">{props.message}</td>
@@ -22,7 +23,7 @@ function TaskRow(props) {
                 status = <span className="badge badge-warning">Removed</span>;
                 break;
             default:
-                status = <span className="badge badge-secondary">Todo</span>;
+                status = <span className="badge badge-secondary">To do</span>;
         }
         return (
             <tr>
